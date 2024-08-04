@@ -1,0 +1,141 @@
+/* GamePage.css */
+
+.game-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+  }
+  
+  .players {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    background-color: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .player h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .player p {
+    margin: 5px 0 0;
+    font-size: 18px;
+  }
+  
+  .board-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .turn-indicator {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .board {
+    display: flex;
+    align-items: center;
+  }
+  
+  .pits-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .pits-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .pit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #ccc;
+    margin: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .pit.active {
+    background-color: #ffcc00; /* 高亮颜色 */
+  }
+  
+  .store {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 120px; /* 高度设置为两个house的高度 */
+    background-color: #8FBC8F; /* 使用合适的颜色 */
+    margin: 5px;
+    border-radius: 30px; /* 椭圆形 */
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .pit:hover, .store:hover {
+    background-color: #bbb;
+  }
+  
+  .notification {
+    position: absolute;
+    bottom: -40px;
+    font-size: 18px;
+    color: red;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .game-over {
+    font-size: 18px;
+    color: red;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .restart-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .restart-button:hover {
+    background-color: #0056b3;
+  }
+  

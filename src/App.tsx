@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Box } from '@mui/material';
+import HomePage from './pages/HomePage';
+import GamePage from './pages/GamePage';
+import PlayerSetup from './pages/PlayerSetup'; // 确保路径正确
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/game" element={<GamePage />} />
+          <Route path="/setup" element={<PlayerSetup />} />
+        </Routes>
+      </Router>
+    </Box>
   );
-}
+};
 
 export default App;

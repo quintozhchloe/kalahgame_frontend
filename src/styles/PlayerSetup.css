@@ -1,0 +1,19 @@
+.setup-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.player-box {
+  border: 2px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.player-box .MuiAvatar-root {
+  margin: auto;
+}
+
+.player-box .MuiTextField-root {
+  width: calc(100% - 40px);
+}

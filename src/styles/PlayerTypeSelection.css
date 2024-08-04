@@ -1,0 +1,12 @@
+.player-type-selection {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .player-type-selection button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
