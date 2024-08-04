@@ -53,7 +53,7 @@ const PlayerSetup: React.FC = () => {
   return (
     <Box textAlign="center" mt={4} sx={{ bgcolor: 'background.default', minHeight: '100vh', p: 3, background: 'linear-gradient(to bottom right, #00ff00, #0000ff)' }}>
       <Typography variant="h4" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Kalah Lobby</Typography>
-      <Typography variant="h6" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Players ( 1 / 2 )</Typography>
+      <Typography variant="h6" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Players ( 2/ 2 )</Typography>
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         <Grid item>
           <Card sx={{ maxWidth: 300, boxShadow: 3 }}>
@@ -86,7 +86,7 @@ const PlayerSetup: React.FC = () => {
         <Grid item>
           <Card sx={{ maxWidth: 300, boxShadow: 3 }}>
             <CardHeader
-              avatar={<Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>Empty</Typography>}
+              avatar={<Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>Player2</Typography>}
               title={
                 <Box display="flex" alignItems="center">
                   <TextField
@@ -117,7 +117,7 @@ const PlayerSetup: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
-      <Typography variant="subtitle1" mt={2} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Waiting for 1 player...</Typography>
+      <Typography variant="subtitle1" mt={2} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Let's play!</Typography>
       <Box sx={{ mt: 3 }}>
         <Card sx={{ maxWidth: 600, mx: 'auto', boxShadow: 3 }}>
           <CardContent>
