@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Avatar, Grid, Dialog, DialogContent, DialogTitle, DialogActions, Card, CardContent, CardHeader } from '@mui/material';
-import PlayerTypeSelection from './PlayerTypeSelection';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField, Typography, Avatar, Grid, Dialog, DialogContent, DialogTitle, DialogActions, Card, CardContent, CardHeader, IconButton } from '@mui/material';
 import AvatarSelection from './AvatarSelection';
 
 const PlayerSetup: React.FC = () => {
-  const [player1Name, setPlayer1Name] = useState('');
+  const [player1Name, setPlayer1Name] = useState('Lucky');
   const [player2Name, setPlayer2Name] = useState('');
   const [player1Avatar, setPlayer1Avatar] = useState('/assets/1.png');
   const [player2Avatar, setPlayer2Avatar] = useState('/assets/2.png');
   const [isAIPlayer, setIsAIPlayer] = useState(false);
-  const [showPlayerTypeSelection, setShowPlayerTypeSelection] = useState(false);
-  const [showAvatarSelection, setShowAvatarSelection] = useState(false);
+  const [showSelectionDialog, setShowSelectionDialog] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<'player1' | 'player2' | null>(null);
   const [startingSeeds, setStartingSeeds] = useState(4);
   const navigate = useNavigate();
@@ -27,17 +25,29 @@ const PlayerSetup: React.FC = () => {
     window.location.reload();
   };
 
-  const handlePlayerTypeSelect = (type: 'bot' | 'local' | 'online') => {
-    setShowPlayerTypeSelection(false);
-  };
-
   const handleAvatarSelect = (avatar: string) => {
     if (currentPlayer === 'player1') {
       setPlayer1Avatar(avatar);
     } else if (currentPlayer === 'player2') {
       setPlayer2Avatar(avatar);
     }
-    setShowAvatarSelection(false);
+    setShowSelectionDialog(false);
+  };
+
+  const handlePlayerTypeSelect = (type: 'bot' | 'local') => {
+    if (type === 'bot') {
+      setIsAIPlayer(true);
+      setPlayer2Name('Robot');
+    } else {
+      setIsAIPlayer(false);
+      setPlayer2Name('');
+    }
+    setShowSelectionDialog(false);
+  };
+
+  const generateRandomName = () => {
+    const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // 生成随机大写字母
+    setPlayer2Name(randomLetter);
   };
 
   return (
@@ -67,7 +77,7 @@ const PlayerSetup: React.FC = () => {
                 sx={{ width: 100, height: 100, cursor: 'pointer', mx: 'auto' }}
                 onClick={() => {
                   setCurrentPlayer('player1');
-                  setShowAvatarSelection(true);
+                  setShowSelectionDialog(true);
                 }}
               />
             </CardContent>
@@ -78,15 +88,20 @@ const PlayerSetup: React.FC = () => {
             <CardHeader
               avatar={<Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>Empty</Typography>}
               title={
-                <TextField
-                  variant="outlined"
-                  label="Player 2 Name"
-                  value={player2Name}
-                  onChange={(e) => setPlayer2Name(e.target.value)}
-                  fullWidth
-                  InputLabelProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
-                  inputProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
-                />
+                <Box display="flex" alignItems="center">
+                  <TextField
+                    variant="outlined"
+                    label="Player 2 Name"
+                    value={player2Name}
+                    onChange={(e) => setPlayer2Name(e.target.value)}
+                    fullWidth
+                    InputLabelProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
+                    inputProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
+                  />
+                  <IconButton onClick={generateRandomName}>
+                    🎲
+                  </IconButton>
+                </Box>
               }
             />
             <CardContent>
@@ -95,11 +110,9 @@ const PlayerSetup: React.FC = () => {
                 sx={{ width: 100, height: 100, cursor: 'pointer', mx: 'auto' }}
                 onClick={() => {
                   setCurrentPlayer('player2');
-                  setShowAvatarSelection(true);
+                  setShowSelectionDialog(true);
                 }}
-              >
-                <Typography variant="h4" sx={{ fontFamily: '"Press Start 2P", cursive' }}>+</Typography>
-              </Avatar>
+              />
             </CardContent>
           </Card>
         </Grid>
@@ -127,27 +140,11 @@ const PlayerSetup: React.FC = () => {
         </Button>
       </Box>
 
-      <Dialog open={showPlayerTypeSelection} onClose={() => setShowPlayerTypeSelection(false)}>
-        <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Select Player Type</DialogTitle>
+      <Dialog open={showSelectionDialog} onClose={() => setShowSelectionDialog(false)}>
+        <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Select Avatar and Player Type</DialogTitle>
         <DialogContent>
-          <PlayerTypeSelection
-            onSelect={handlePlayerTypeSelect}
-            onCancel={() => setShowPlayerTypeSelection(false)}
-          />
+          <AvatarSelection onSelect={handleAvatarSelect} onSelectType={handlePlayerTypeSelect} onCancel={() => setShowSelectionDialog(false)} />
         </DialogContent>
-      </Dialog>
-
-      <Dialog open={showAvatarSelection} onClose={() => setShowAvatarSelection(false)}>
-        <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Select Avatar</DialogTitle>
-        <DialogContent>
-          <AvatarSelection
-            onSelect={handleAvatarSelect}
-            onCancel={() => setShowAvatarSelection(false)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowAvatarSelection(false)} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Cancel</Button>
-        </DialogActions>
       </Dialog>
     </Box>
   );

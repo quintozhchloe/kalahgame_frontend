@@ -22,27 +22,20 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
   const [notification, setNotification] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [winner, setWinner] = useState<string | null>(null);
-  const [showPlayerTypeSelection, setShowPlayerTypeSelection] = useState<boolean>(false);
-  const [showAvatarSelection, setShowAvatarSelection] = useState<boolean>(false);
-  const [currentPlayer, setCurrentPlayer] = useState<'player1' | 'player2' | null>(null);
   const isAIPlayer = JSON.parse(sessionStorage.getItem('isAIPlayer') || 'false');
   const [startTime, setStartTime] = useState<number>(Date.now());
-
-  useEffect(() => {
-    console.log('Initial gameState set:', gameState); // 调试检查点
-  }, []);
 
   useEffect(() => {
     if (isAIPlayer && gameState.currentPlayer === 1 && !gameOver) {
       const validMoves = gameState.pits.slice(7, 13).map((seeds, index) => (seeds > 0 ? index + 7 : -1)).filter(index => index !== -1);
       if (validMoves.length > 0) {
-        handlePitClick(validMoves[0]);
+        const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+        setTimeout(() => handlePitClick(randomMove), 1000); // 延迟1秒后自动点击
       }
     }
   }, [gameState, isAIPlayer, gameOver]);
 
   const handlePitClick = (pitIndex: number) => {
-    console.log(`Pit ${pitIndex} clicked`); // 调试检查点
     if (isMoveValid(pitIndex) && !gameOver) {
       const newGameState = { ...gameState };
       let seeds = newGameState.pits[pitIndex];
@@ -114,7 +107,6 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
   };
 
   const restartGame = () => {
-    console.log('Restart button clicked');
     setGameState(getInitialGameState());
     setNotification(null);
     setGameOver(false);
@@ -126,7 +118,6 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
     const newEntry = { playerName: name, score, duration, avatar };
     try {
       await axios.post('http://localhost:5200/api/leaderboard', newEntry);
-      console.log('Leaderboard updated:', newEntry);
     } catch (error) {
       console.error('Error updating leaderboard:', error);
     }
