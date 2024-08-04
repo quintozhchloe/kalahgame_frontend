@@ -8,6 +8,7 @@ const HomePage: React.FC = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', textAlign: 'center', p: 3, background: 'linear-gradient(to bottom right, #00ff00, #0000ff)' }}>
       <Card sx={{ maxWidth: 800, p: 3 }}>
         <CardContent>
+          <img src="/assets/title.png" alt="Kalah Title" style={{ maxWidth: '100%' }} />
           <Typography variant="h2" gutterBottom>Kalah - description</Typography>
           <Typography variant="body1" paragraph align="left">
             Kalah is a well-known board game, also known under the names Mancala, Warri or Kalaha. It is a strategic board game in which two players compete against each other. The aim of the game is to get as many stones (usually pebbles or beans) as possible into your collection area. The game originally comes from Africa and has been played in many countries around the world for centuries.

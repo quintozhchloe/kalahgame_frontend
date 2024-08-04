@@ -40,16 +40,15 @@ const PlayerSetup: React.FC = () => {
     setShowAvatarSelection(false);
   };
 
-
   return (
     <Box textAlign="center" mt={4} sx={{ bgcolor: 'background.default', minHeight: '100vh', p: 3, background: 'linear-gradient(to bottom right, #00ff00, #0000ff)' }}>
-      <Typography variant="h4" gutterBottom>Kalah Lobby</Typography>
-      <Typography variant="h6" gutterBottom>Players ( 1 / 2 )</Typography>
+      <Typography variant="h4" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Kalah Lobby</Typography>
+      <Typography variant="h6" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Players ( 1 / 2 )</Typography>
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         <Grid item>
           <Card sx={{ maxWidth: 300, boxShadow: 3 }}>
             <CardHeader
-              avatar={<Typography variant="h6">👑</Typography>}
+              avatar={<Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>👑</Typography>}
               title={
                 <TextField
                   variant="outlined"
@@ -57,6 +56,8 @@ const PlayerSetup: React.FC = () => {
                   value={player1Name}
                   onChange={(e) => setPlayer1Name(e.target.value)}
                   fullWidth
+                  InputLabelProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
+                  inputProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
                 />
               }
             />
@@ -75,7 +76,7 @@ const PlayerSetup: React.FC = () => {
         <Grid item>
           <Card sx={{ maxWidth: 300, boxShadow: 3 }}>
             <CardHeader
-              avatar={<Typography variant="h6">Empty</Typography>}
+              avatar={<Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>Empty</Typography>}
               title={
                 <TextField
                   variant="outlined"
@@ -83,6 +84,8 @@ const PlayerSetup: React.FC = () => {
                   value={player2Name}
                   onChange={(e) => setPlayer2Name(e.target.value)}
                   fullWidth
+                  InputLabelProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
+                  inputProps={{ style: { fontFamily: '"Press Start 2P", cursive' } }}
                 />
               }
             />
@@ -95,37 +98,37 @@ const PlayerSetup: React.FC = () => {
                   setShowAvatarSelection(true);
                 }}
               >
-                <Typography variant="h4">+</Typography>
+                <Typography variant="h4" sx={{ fontFamily: '"Press Start 2P", cursive' }}>+</Typography>
               </Avatar>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-      <Typography variant="subtitle1" mt={2}>Waiting for 1 player...</Typography>
+      <Typography variant="subtitle1" mt={2} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Waiting for 1 player...</Typography>
       <Box sx={{ mt: 3 }}>
         <Card sx={{ maxWidth: 600, mx: 'auto', boxShadow: 3 }}>
           <CardContent>
-            <Typography variant="h6">Options</Typography>
+            <Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>Options</Typography>
             <Box display="flex" alignItems="center" mt={2}>
-              <Typography variant="body1" mr={2}>Start marbles</Typography>
+              <Typography variant="body1" mr={2} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Start marbles</Typography>
               <TextField
                 type="number"
                 value={startingSeeds}
                 onChange={(e) => setStartingSeeds(Number(e.target.value))}
-                inputProps={{ min: 1 }}
+                inputProps={{ min: 1, style: { fontFamily: '"Press Start 2P", cursive' } }}
               />
             </Box>
           </CardContent>
         </Card>
       </Box>
       <Box sx={{ mt: 3 }}>
-        <Button variant="contained" color="primary" onClick={handleStartGame} sx={{ bgcolor: '#3498db', color: 'white', mr: 2 }}>
+        <Button variant="contained" color="primary" onClick={handleStartGame} sx={{ bgcolor: '#3498db', color: 'white', mr: 2, fontFamily: '"Press Start 2P", cursive' }}>
           Start Game
         </Button>
       </Box>
 
       <Dialog open={showPlayerTypeSelection} onClose={() => setShowPlayerTypeSelection(false)}>
-        <DialogTitle>Select Player Type</DialogTitle>
+        <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Select Player Type</DialogTitle>
         <DialogContent>
           <PlayerTypeSelection
             onSelect={handlePlayerTypeSelect}
@@ -135,7 +138,7 @@ const PlayerSetup: React.FC = () => {
       </Dialog>
 
       <Dialog open={showAvatarSelection} onClose={() => setShowAvatarSelection(false)}>
-        <DialogTitle>Select Avatar</DialogTitle>
+        <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Select Avatar</DialogTitle>
         <DialogContent>
           <AvatarSelection
             onSelect={handleAvatarSelect}
@@ -143,7 +146,7 @@ const PlayerSetup: React.FC = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowAvatarSelection(false)}>Cancel</Button>
+          <Button onClick={() => setShowAvatarSelection(false)} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </Box>

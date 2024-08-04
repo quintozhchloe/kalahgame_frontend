@@ -11,8 +11,8 @@ const getInitialGameState = (): GameState => {
     pits: Array(14).fill(startingSeeds).map((v, i) => (i === 6 || i === 13 ? 0 : startingSeeds)),
     currentPlayer: 0,
     players: [
-      { name: sessionStorage.getItem('player1Name') || 'Player 1', score: 0, avatar: sessionStorage.getItem('player1Avatar') || 'red' },
-      { name: sessionStorage.getItem('player2Name') || 'Player 2', score: 0, avatar: sessionStorage.getItem('player2Avatar') || 'blue' },
+      { name: sessionStorage.getItem('player1Name') || 'Player 1', score: 0, avatar: sessionStorage.getItem('player1Avatar') || '/assets/1.png' },
+      { name: sessionStorage.getItem('player2Name') || 'Player 2', score: 0, avatar: sessionStorage.getItem('player2Avatar') || '/assets/2.png' },
     ],
   };
 };
@@ -123,30 +123,28 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
   };
 
   const updateLeaderboard = async (name: string, score: number, duration: number, avatar: string) => {
-    const leaderboard = JSON.parse(localStorage.getItem('leaderboard') || '[]');
-    leaderboard.push({ name, score, duration, avatar });
-    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
-
+    const newEntry = { playerName: name, score, duration, avatar };
     try {
-      await axios.post('/api/leaderboard', { name, score, duration, avatar });
+      await axios.post('http://localhost:5200/api/leaderboard', newEntry);
+      console.log('Leaderboard updated:', newEntry);
     } catch (error) {
       console.error('Error updating leaderboard:', error);
     }
   };
 
   return (
-    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', p: 3, textAlign: 'center', background: 'linear-gradient(to bottom right, #00ff00, #0000ff)' }}>
-      <Typography variant="h3" gutterBottom sx={{ color: 'white' }}>Kalah</Typography>
-      <Typography variant="h5" mt={2} sx={{ color: 'white' }}>{gameState.currentPlayer === 0 ? "Player 1's turn" : "Player 2's turn"}</Typography>
+    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', p: 3, textAlign: 'center', background: 'url(/assets/bg.png) no-repeat center/cover', fontFamily: '"Press Start 2P", cursive' }}>
+      <Typography variant="h3" gutterBottom sx={{ color: 'white', fontFamily: '"Press Start 2P", cursive' }}>Kalah</Typography>
+      <Typography variant="h5" mt={2} sx={{ color: 'white', fontFamily: '"Press Start 2P", cursive' }}>{gameState.currentPlayer === 0 ? "Player 1's turn" : "Player 2's turn"}</Typography>
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         <Grid item xs={12} sm={3} md={2}>
           <Card>
             <CardHeader
-              avatar={<Avatar sx={{ bgcolor: gameState.players[1].avatar, width: 100, height: 100 }} />}
+              avatar={<Avatar src={gameState.players[1].avatar} sx={{ width: 100, height: 100 }} />}
               title={gameState.players[1].name}
-              titleTypographyProps={{ variant: 'h6' }}
+              titleTypographyProps={{ variant: 'h6', fontFamily: '"Press Start 2P", cursive' }}
               subheader={`Points: ${gameState.players[1].score}`}
-              subheaderTypographyProps={{ variant: 'subtitle1' }}
+              subheaderTypographyProps={{ variant: 'subtitle1', fontFamily: '"Press Start 2P", cursive' }}
             />
           </Card>
         </Grid>
@@ -158,28 +156,28 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
         <Grid item xs={12} sm={3} md={2}>
           <Card>
             <CardHeader
-              avatar={<Avatar sx={{ bgcolor: gameState.players[0].avatar, width: 100, height: 100 }} />}
+              avatar={<Avatar src={gameState.players[0].avatar} sx={{ width: 100, height: 100 }} />}
               title={gameState.players[0].name}
-              titleTypographyProps={{ variant: 'h6' }}
+              titleTypographyProps={{ variant: 'h6', fontFamily: '"Press Start 2P", cursive' }}
               subheader={`Points: ${gameState.players[0].score}`}
-              subheaderTypographyProps={{ variant: 'subtitle1' }}
+              subheaderTypographyProps={{ variant: 'subtitle1', fontFamily: '"Press Start 2P", cursive' }}
             />
           </Card>
         </Grid>
       </Grid>
       {notification && (
-        <Typography variant="h5" mt={2} sx={{ color: 'yellow' }}>{notification}</Typography>
+        <Typography variant="h5" mt={2} sx={{ color: 'yellow', fontFamily: '"Press Start 2P", cursive' }}>{notification}</Typography>
       )}
-      <Button variant="contained" color="primary" onClick={restartGame} sx={{ mt: 3 }}>Restart Game</Button>
+      <Button variant="contained" color="primary" onClick={restartGame} sx={{ mt: 3, fontFamily: '"Press Start 2P", cursive' }}>Restart Game</Button>
       <Leaderboard />
       {gameOver && (
         <Dialog open={gameOver} onClose={() => setGameOver(false)}>
-          <DialogTitle>Game Over</DialogTitle>
+          <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Game Over</DialogTitle>
           <DialogContent>
-            <Typography variant="h6">{winner}</Typography>
+            <Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>{winner}</Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setGameOver(false)}>Close</Button>
+            <Button onClick={() => setGameOver(false)} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Close</Button>
           </DialogActions>
         </Dialog>
       )}
