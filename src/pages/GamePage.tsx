@@ -134,11 +134,11 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', p: 3, textAlign: 'center', background: 'url(/assets/bg.png) no-repeat center/cover', fontFamily: '"Press Start 2P", cursive' }}>
-      <Typography variant="h3" gutterBottom sx={{ color: 'white', fontFamily: '"Press Start 2P", cursive' }}>Kalah</Typography>
+      <Typography variant="h3" gutterBottom sx={{ color: '#ffff99', fontFamily: '"Press Start 2P", cursive' }}>Kalah</Typography>
       <Typography variant="h5" mt={2} sx={{ color: 'white', fontFamily: '"Press Start 2P", cursive' }}>{gameState.currentPlayer === 0 ? "Player 1's turn" : "Player 2's turn"}</Typography>
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         <Grid item xs={12} sm={3} md={2}>
-          <Card>
+          <Card sx={{ boxShadow: 'inset 2px 2px 5px rgba(0, 0, 0, 0.3)' }}>
             <CardHeader
               avatar={<Avatar src={gameState.players[1].avatar} sx={{ width: 100, height: 100 }} />}
               title={gameState.players[1].name}
@@ -154,7 +154,7 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
           </Card>
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
-          <Card>
+          <Card sx={{ boxShadow: 'inset 2px 2px 5px rgba(0, 0, 0, 0.3)' }}>
             <CardHeader
               avatar={<Avatar src={gameState.players[0].avatar} sx={{ width: 100, height: 100 }} />}
               title={gameState.players[0].name}

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, Card, Avatar, Grid } from '@mui/material';
+import { Box, Typography, Card, Divider } from '@mui/material';
 
 interface PlayerScore {
   playerName: string;
   score: number;
-  duration: number;
-  avatar: string;
 }
 
 const Leaderboard: React.FC = () => {
@@ -28,19 +26,22 @@ const Leaderboard: React.FC = () => {
 
   return (
     <Card sx={{ mt: 3, p: 2, maxWidth: 1100, mx: 'auto', border: '2px solid white' }}>
-      <Typography variant="h5" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Leaderboard</Typography>
+      <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive', mr: 1 }}>
+          👑
+        </Typography>
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>
+          Rank
+        </Typography>
+      </Box>
       <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
         {leaderboard.slice(0, 5).map((player, index) => (
-          <Grid container key={index} spacing={2} alignItems="center">
-            <Grid item>
-              <Avatar src={player.avatar} alt={player.playerName} sx={{ width: 40, height: 40 }} />
-            </Grid>
-            <Grid item>
-              <Typography component="li" sx={{ fontFamily: '"Press Start 2P", cursive' }}>
-                {player.playerName}: {player.score} points, Duration: {player.duration} seconds
-              </Typography>
-            </Grid>
-          </Grid>
+          <Box key={index} textAlign="center">
+            <Typography component="li" sx={{ fontFamily: '"Press Start 2P", cursive', mb: 1 }}>
+              {player.playerName}: {player.score} points
+            </Typography>
+            {index < leaderboard.length - 1 && <Divider sx={{ my: 1 }} />}
+          </Box>
         ))}
       </Box>
     </Card>
