@@ -23,15 +23,15 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
           justifyContent: 'center',
           alignItems: 'center',
           cursor: 'pointer',
-          width: '86.4px', // 增加20%的宽度
-          height: '86.4px', // 增加20%的高度
+          width: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应宽度
+          height: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应高度
           margin: '10px'
         }}
       >
         <Typography 
           className="seeds"
           sx={{
-            fontSize: '24px', // 字号大2号
+            fontSize: { xs: '16px', sm: '20px', md: '24px' }, // 自适应字号
             fontWeight: 'bold',
             color: 'black'
           }}
@@ -50,7 +50,7 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
           top: '10px',
           width: '100%',
           textAlign: 'center',
-          fontSize: '24px',
+          fontSize: { xs: '18px', sm: '22px', md: '24px' }, // 自适应字号
           fontWeight: 'bold',
           color: 'black'
         }}
@@ -69,15 +69,15 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              width: '72px', // 增加20%的宽度
-              height: '216px', // 增加20%的高度
+              width: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应宽度
+              height: { xs: '180px', sm: '200px', md: '216px' }, // 自适应高度
               margin: '10px'
             }}
           >
             <Typography 
               className="seeds"
               sx={{
-                fontSize: '24px', // 字号大2号
+                fontSize: { xs: '18px', sm: '22px', md: '24px' }, // 自适应字号
                 fontWeight: 'bold',
                 color: 'black'
               }}
@@ -107,15 +107,15 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              width: '72px', // 增加20%的宽度
-              height: '216px', // 增加20%的高度
+              width: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应宽度
+              height: { xs: '180px', sm: '200px', md: '216px' }, // 自适应高度
               margin: '10px'
             }}
           >
             <Typography 
               className="seeds"
               sx={{
-                fontSize: '24px', // 字号大2号
+                fontSize: { xs: '18px', sm: '22px', md: '24px' }, // 自适应字号
                 fontWeight: 'bold',
                 color: 'black'
               }}

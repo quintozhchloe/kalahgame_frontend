@@ -10,50 +10,43 @@ const avatarOptions = [
   { color: 'orange', src: '/assets/6.png' },
 ];
 
-const playerTypeOptions = [
-  { label: 'Local Player', src: '/assets/local.png', type: 'local' },
-  { label: 'Robot', src: '/assets/bot.png', type: 'bot' },
-];
-
 interface AvatarSelectionProps {
   onSelect: (avatar: string) => void;
-  onSelectType: (type: 'bot' | 'local') => void;
+  onSelectType?: (type: 'bot' | 'local') => void; // Add the optional onSelectType prop
   onCancel: () => void;
+  showPlayerType?: boolean; // Add the optional showPlayerType prop
 }
 
-const AvatarSelection: React.FC<AvatarSelectionProps> = ({ onSelect, onSelectType, onCancel }) => {
+const AvatarSelection: React.FC<AvatarSelectionProps> = ({ onSelect, onSelectType, onCancel, showPlayerType }) => {
   return (
     <Box textAlign="center">
-      <Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive', mb: 2 }}>Select Avatar</Typography>
+      <Typography variant="h6" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Select Avatar</Typography>
       <Grid container spacing={2} justifyContent="center">
         {avatarOptions.map((avatar, index) => (
           <Grid item xs={4} key={index}>
             <Avatar
               src={avatar.src}
-              sx={{ width: 80, height: 80, cursor: 'pointer', border: '2px solid black' }}
+              sx={{ width: 80, height: 80, cursor: 'pointer', border: '2px solid #000', borderRadius: '50%' }}
               onClick={() => onSelect(avatar.src)}
             />
           </Grid>
         ))}
       </Grid>
-      <Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive', mt: 4, mb: 2 }}>Select Player Type</Typography>
-      <Grid container spacing={2} justifyContent="center">
-        {playerTypeOptions.map((option, index) => (
-          <Grid item xs={4} key={index}>
-            <Box
-              textAlign="center"
-              sx={{ cursor: 'pointer' }}
-              onClick={() => onSelectType(option.type as 'bot' | 'local')}
-            >
-              <Avatar
-                src={option.src}
-                sx={{ width: 80, height: 80, border: '2px solid black', mb: 1 }}
-              />
-              <Typography variant="body2" sx={{ fontFamily: '"Press Start 2P", cursive' }}>{option.label}</Typography>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+      {showPlayerType && (
+        <>
+          <Typography variant="h6" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive', marginTop: 2 }}>Select Player Type</Typography>
+          <Box display="flex" justifyContent="center" mt={2}>
+            <Button onClick={() => onSelectType && onSelectType('local')} sx={{ margin: 1 }}>
+              <img src="/assets/local.png" alt="Local Player" style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
+              <Typography variant="subtitle1" sx={{ fontFamily: '"Press Start 2P", cursive' }}>Local Player</Typography>
+            </Button>
+            <Button onClick={() => onSelectType && onSelectType('bot')} sx={{ margin: 1 }}>
+              <img src="/assets/bot.png" alt="Robot" style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
+              <Typography variant="subtitle1" sx={{ fontFamily: '"Press Start 2P", cursive' }}>Robot</Typography>
+            </Button>
+          </Box>
+        </>
+      )}
       <DialogActions>
         <Button onClick={onCancel} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Cancel</Button>
       </DialogActions>

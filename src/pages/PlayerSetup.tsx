@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Avatar, Grid, Dialog, DialogContent, DialogTitle, DialogActions, Card, CardContent, CardHeader, IconButton } from '@mui/material';
+import { Box, Button, TextField, Typography, Avatar, Grid, Dialog, DialogContent, DialogTitle, Card, CardContent, CardHeader, IconButton } from '@mui/material';
 import AvatarSelection from './AvatarSelection';
 
 const PlayerSetup: React.FC = () => {
@@ -143,7 +143,12 @@ const PlayerSetup: React.FC = () => {
       <Dialog open={showSelectionDialog} onClose={() => setShowSelectionDialog(false)}>
         <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Select Avatar and Player Type</DialogTitle>
         <DialogContent>
-          <AvatarSelection onSelect={handleAvatarSelect} onSelectType={handlePlayerTypeSelect} onCancel={() => setShowSelectionDialog(false)} />
+          <AvatarSelection 
+            onSelect={handleAvatarSelect} 
+            onSelectType={handlePlayerTypeSelect} 
+            onCancel={() => setShowSelectionDialog(false)} 
+            showPlayerType={currentPlayer === 'player2'} // 控制是否显示玩家类型选择
+          />
         </DialogContent>
       </Dialog>
     </Box>
