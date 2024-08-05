@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, Card, Divider } from '@mui/material';
+import { Box, Typography, Card, Divider, Button } from '@mui/material';
+
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 interface PlayerScore {
   playerName: string;
@@ -16,11 +18,38 @@ const Leaderboard: React.FC = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get('http://localhost:5200/api/leaderboard');
+      const response = await axios.get(`${API_URL}/leaderboard`);
       console.log('Fetched leaderboard data:', response.data); // 调试日志
       setLeaderboard(response.data);
     } catch (error) {
       console.error('Error fetching leaderboard:', error);
+    }
+  };
+
+  const addEntry = async (entry: PlayerScore) => {
+    try {
+      await axios.post(`${API_URL}/leaderboard`, entry);
+      fetchLeaderboard(); // 刷新列表
+    } catch (error) {
+      console.error('Error adding entry:', error);
+    }
+  };
+
+  const updateEntry = async (playerName: string, updatedEntry: PlayerScore) => {
+    try {
+      await axios.put(`${API_URL}/leaderboard/${playerName}`, updatedEntry);
+      fetchLeaderboard(); // 刷新列表
+    } catch (error) {
+      console.error('Error updating entry:', error);
+    }
+  };
+
+  const deleteEntry = async (playerName: string) => {
+    try {
+      await axios.delete(`${API_URL}/leaderboard/${playerName}`);
+      fetchLeaderboard(); // 刷新列表
+    } catch (error) {
+      console.error('Error deleting entry:', error);
     }
   };
 
@@ -39,6 +68,8 @@ const Leaderboard: React.FC = () => {
           <Box key={index} textAlign="center">
             <Typography component="li" sx={{ fontFamily: '"Press Start 2P", cursive', mb: 1 }}>
               {player.playerName}: {player.score} points
+              <Button onClick={() => deleteEntry(player.playerName)}>Delete</Button>
+              <Button onClick={() => updateEntry(player.playerName, { ...player, score: player.score + 1 })}>Increment</Button>
             </Typography>
             {index < leaderboard.length - 1 && <Divider sx={{ my: 1 }} />}
           </Box>

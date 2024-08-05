@@ -168,7 +168,15 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
             <Typography variant="h6" sx={{ fontFamily: '"Press Start 2P", cursive' }}>{winner}</Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setGameOver(false)} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Close</Button>
+          <Button
+              onClick={() => {
+                setGameOver(false);
+                window.location.reload();
+              }}
+              sx={{ fontFamily: '"Press Start 2P", cursive' }}
+            >
+              OK
+            </Button>
           </DialogActions>
         </Dialog>
       )}
