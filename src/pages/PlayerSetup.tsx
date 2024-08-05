@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Avatar, Grid, Dialog, DialogContent, DialogTitle, Card, CardContent, CardHeader, IconButton } from '@mui/material';
+import { Box, Button, TextField, Typography, Avatar, Grid, Dialog, DialogContent, DialogTitle, DialogActions, Card, CardContent, CardHeader, IconButton, CircularProgress } from '@mui/material';
 import AvatarSelection from './AvatarSelection';
+import { io, Socket } from 'socket.io-client';
 
 const PlayerSetup: React.FC = () => {
   const [player1Name, setPlayer1Name] = useState('Lucky');
@@ -12,7 +13,35 @@ const PlayerSetup: React.FC = () => {
   const [showSelectionDialog, setShowSelectionDialog] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<'player1' | 'player2' | null>(null);
   const [startingSeeds, setStartingSeeds] = useState(4);
+  const [isMatching, setIsMatching] = useState(false);
+  const [matchFound, setMatchFound] = useState(false);
   const navigate = useNavigate();
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    const newSocket = io('http://localhost:5200/match');
+    setSocket(newSocket);
+
+    newSocket.on('connect', () => {
+      console.log('connected to server');
+    });
+
+    newSocket.on('matchFound', (data) => {
+      console.log('match found:', data);
+      setPlayer2Name(data.player1Name);
+      setPlayer2Avatar(data.player1Avatar);
+      setIsMatching(false);
+      setMatchFound(true);
+
+      setTimeout(() => {
+        handleStartGame();
+      }, 1000); // 等待1秒后进入游戏
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
 
   const handleStartGame = () => {
     sessionStorage.setItem('player1Name', player1Name);
@@ -50,10 +79,24 @@ const PlayerSetup: React.FC = () => {
     setPlayer2Name(randomLetter);
   };
 
+  const handleRandomMatch = () => {
+    setIsMatching(true);
+    if (socket) {
+      socket.emit('RequestMatch', player1Name, player1Avatar);
+    }
+  };
+
+  const handleCancelMatch = () => {
+    setIsMatching(false);
+    if (socket) {
+      socket.emit('CancelMatch');
+    }
+  };
+
   return (
     <Box textAlign="center" mt={4} sx={{ bgcolor: 'background.default', minHeight: '100vh', p: 3, background: 'linear-gradient(to bottom right, #00ff00, #0000ff)' }}>
       <Typography variant="h4" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Kalah Lobby</Typography>
-      <Typography variant="h6" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Players ( 2/ 2 )</Typography>
+      <Typography variant="h6" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>Players ( 2 / 2 )</Typography>
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         <Grid item>
           <Card sx={{ maxWidth: 300, boxShadow: 3 }}>
@@ -138,6 +181,9 @@ const PlayerSetup: React.FC = () => {
         <Button variant="contained" color="primary" onClick={handleStartGame} sx={{ bgcolor: '#3498db', color: 'white', mr: 2, fontFamily: '"Press Start 2P", cursive' }}>
           Start Game
         </Button>
+        <Button variant="contained" color="secondary" onClick={handleRandomMatch} sx={{ bgcolor: '#e74c3c', color: 'white', ml: 2, fontFamily: '"Press Start 2P", cursive' }}>
+          Random Match
+        </Button>
       </Box>
 
       <Dialog open={showSelectionDialog} onClose={() => setShowSelectionDialog(false)}>
@@ -150,6 +196,21 @@ const PlayerSetup: React.FC = () => {
             showPlayerType={currentPlayer === 'player2'} // 控制是否显示玩家类型选择
           />
         </DialogContent>
+      </Dialog>
+
+      <Dialog open={isMatching}>
+        <DialogTitle sx={{ fontFamily: '"Press Start 2P", cursive' }}>Matching...</DialogTitle>
+        <DialogContent>
+          <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+            <CircularProgress />
+            <Typography variant="subtitle1" mt={2} sx={{ fontFamily: '"Press Start 2P", cursive' }}>Waiting for another player...</Typography>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelMatch} sx={{ fontFamily: '"Press Start 2P", cursive' }}>
+            Cancel
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );
