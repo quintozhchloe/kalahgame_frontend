@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
-import PlayerSetup from './pages/PlayerSetup'; // 确保路径正确
+import PlayerSetup from './pages/PlayerSetup';
+import AdminAnnouncements from './pages/AdminAnnouncements'; // 确保路径正确
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/game" element={<GamePage />} />
           <Route path="/setup" element={<PlayerSetup />} />
+          <Route path="/admin-announcements" element={<AdminAnnouncements />} />
         </Routes>
       </Router>
     </Box>
