@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box, Button, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-  Dialog, DialogContent, DialogTitle, DialogActions, TextField, IconButton
+  Dialog, DialogContent, DialogTitle, DialogActions, TextField, IconButton, Snackbar, Alert
 } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import axios from 'axios';
@@ -20,6 +20,9 @@ const AdminAnnouncements: React.FC = () => {
   const [editAnnouncement, setEditAnnouncement] = useState<Announcement | null>(null);
   const [newAnnouncement, setNewAnnouncement] = useState<string>('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState<boolean>(false);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
     fetchAnnouncements();
@@ -33,22 +36,34 @@ const AdminAnnouncements: React.FC = () => {
       console.error('Error fetching announcements:', error);
     }
   };
-
   const handleAddAnnouncement = async () => {
     try {
-      const response = await axios.post(`${apiBaseUrl}/announcements`, { content: newAnnouncement });
+      const response = await axios.post(`${apiBaseUrl}/announcements/`, { 
+        id: "0", // Default id value
+        title: "title", // Default title value
+        content: newAnnouncement 
+      });
       setAnnouncements([...announcements, response.data]);
-      setIsAddDialogOpen(false);
+      setSnackbarMessage('Announcement added successfully');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
+      setTimeout(() => {
+        setIsAddDialogOpen(false);
+      }, 5000); // Close the dialog after 5 seconds
       setNewAnnouncement('');
     } catch (error) {
-      console.error('Error adding announcement:', error);
+      setSnackbarMessage('Failed to add announcement');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
-  };
+};
+
 
   const handleUpdateAnnouncement = async (announcement: Announcement) => {
     try {
-      const response = await axios.put(`${apiBaseUrl}/announcements/${announcement.id}`, announcement);
-      setAnnouncements(announcements.map(a => a.id === announcement.id ? response.data : a));
+      const { id, ...updatedFields } = announcement; // Destructure to separate id from the fields to update
+      await axios.put(`${apiBaseUrl}/announcements/${id}`, updatedFields); // Only pass updated fields
+      setAnnouncements(announcements.map(a => a.id === announcement.id ? { ...a, ...updatedFields } : a));
       setEditAnnouncement(null);
     } catch (error) {
       console.error('Error updating announcement:', error);
@@ -62,6 +77,10 @@ const AdminAnnouncements: React.FC = () => {
     } catch (error) {
       console.error('Error deleting announcement:', error);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -138,6 +157,16 @@ const AdminAnnouncements: React.FC = () => {
           <Button onClick={handleAddAnnouncement} color="primary">Add</Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

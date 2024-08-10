@@ -4,7 +4,16 @@ import { Box, Button, TextField, Typography, Avatar, Grid, Dialog, DialogContent
 import AvatarSelection from './AvatarSelection';
 import AnnouncementPanel from '../components/AnnouncementPanel';
 import MatchingDialog from '../components/MatchingDialog';
-import { io, Socket } from 'socket.io-client';
+import axios from 'axios';
+
+const API_URL = process.env.REACT_APP_API_URL || '';
+const apiBaseUrl = API_URL;
+
+interface Announcement {
+  id: string;
+  content: string;
+  date: string;
+}
 
 const PlayerSetup: React.FC = () => {
   const [player1Name, setPlayer1Name] = useState('Lucky');
@@ -16,32 +25,21 @@ const PlayerSetup: React.FC = () => {
   const [currentPlayer, setCurrentPlayer] = useState<'player1' | 'player2' | null>(null);
   const [startingSeeds, setStartingSeeds] = useState(4);
   const [isMatching, setIsMatching] = useState(false);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const navigate = useNavigate();
-  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:5200/match');
-    setSocket(newSocket);
-
-    newSocket.on('connect', () => {
-      console.log('connected to server');
-    });
-
-    newSocket.on('matchFound', (data) => {
-      console.log('match found:', data);
-      setPlayer2Name(data.player1Name);
-      setPlayer2Avatar(data.player1Avatar);
-      setIsMatching(false);
-
-      setTimeout(() => {
-        handleStartGame();
-      }, 1000); // 等待1秒后进入游戏
-    });
-
-    return () => {
-      newSocket.disconnect();
-    };
+    fetchAnnouncements();
   }, []);
+
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await axios.get(`${apiBaseUrl}/announcements`);
+      setAnnouncements(response.data);
+    } catch (error) {
+      console.error('Error fetching announcements:', error);
+    }
+  };
 
   const handleStartGame = () => {
     sessionStorage.setItem('player1Name', player1Name);
@@ -77,20 +75,6 @@ const PlayerSetup: React.FC = () => {
   const generateRandomName = () => {
     const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // 生成随机大写字母
     setPlayer2Name(randomLetter);
-  };
-
-  const handleRandomMatch = () => {
-    setIsMatching(true);
-    if (socket) {
-      socket.emit('RequestMatch', player1Name, player1Avatar);
-    }
-  };
-
-  const handleCancelMatch = () => {
-    setIsMatching(false);
-    if (socket) {
-      socket.emit('CancelMatch');
-    }
   };
 
   return (
@@ -181,9 +165,6 @@ const PlayerSetup: React.FC = () => {
         <Button variant="contained" color="primary" onClick={handleStartGame} sx={{ bgcolor: '#3498db', color: 'white', mr: 2, fontFamily: '"Press Start 2P", cursive' }}>
           Start Game
         </Button>
-        <Button variant="contained" color="secondary" onClick={handleRandomMatch} sx={{ bgcolor: '#e74c3c', color: 'white', ml: 2, fontFamily: '"Press Start 2P", cursive' }}>
-          Random Match
-        </Button>
       </Box>
 
       <Dialog open={showSelectionDialog} onClose={() => setShowSelectionDialog(false)}>
@@ -198,9 +179,7 @@ const PlayerSetup: React.FC = () => {
         </DialogContent>
       </Dialog>
 
-      <MatchingDialog isMatching={isMatching} handleCancelMatch={handleCancelMatch} />
-
-      <AnnouncementPanel />
+      <AnnouncementPanel announcements={announcements} />
     </Box>
   );
 };

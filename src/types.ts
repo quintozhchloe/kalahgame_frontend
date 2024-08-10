@@ -14,3 +14,9 @@ export interface PlayerScore {
   name: string;
   score: number;
 }
+
+export interface Announcement {
+  id: string;
+  content: string;
+  date: string;
+}

@@ -35,23 +35,8 @@ const Leaderboard: React.FC = () => {
     }
   };
 
-  const updateEntry = async (playerName: string, updatedEntry: PlayerScore) => {
-    try {
-      await axios.put(`${API_URL}/leaderboard/${playerName}`, updatedEntry);
-      fetchLeaderboard(); // 刷新列表
-    } catch (error) {
-      console.error('Error updating entry:', error);
-    }
-  };
-
-  const deleteEntry = async (playerName: string) => {
-    try {
-      await axios.delete(`${API_URL}/leaderboard/${playerName}`);
-      fetchLeaderboard(); // 刷新列表
-    } catch (error) {
-      console.error('Error deleting entry:', error);
-    }
-  };
+  
+  
 
   return (
     <Card sx={{ mt: 3, p: 2, maxWidth: 1100, mx: 'auto', border: '2px solid white' }}>
@@ -62,14 +47,17 @@ const Leaderboard: React.FC = () => {
         <Typography variant="h5" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive' }}>
           Rank
         </Typography>
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: '"Press Start 2P", cursive', mr: 1 }}>
+          👑
+        </Typography>
       </Box>
       <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
         {leaderboard.slice(0, 5).map((player, index) => (
           <Box key={index} textAlign="center">
             <Typography component="li" sx={{ fontFamily: '"Press Start 2P", cursive', mb: 1 }}>
               {player.playerName}: {player.score} points
-              <Button onClick={() => deleteEntry(player.playerName)}>Delete</Button>
-              <Button onClick={() => updateEntry(player.playerName, { ...player, score: player.score + 1 })}>Increment</Button>
+              {/* <Button onClick={() => deleteEntry(player.playerName)}>Delete</Button>
+              <Button onClick={() => updateEntry(player.playerName, { ...player, score: player.score + 1 })}>Increment</Button> */}
             </Typography>
             {index < leaderboard.length - 1 && <Divider sx={{ my: 1 }} />}
           </Box>

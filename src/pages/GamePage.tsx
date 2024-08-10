@@ -4,6 +4,7 @@ import Board from '../components/Board';
 import Leaderboard from '../components/Leaderboard';
 import { GameState } from '../types';
 import axios from 'axios';
+const apiBaseUrl = process.env.REACT_APP_API_URL || '';
 
 const getInitialGameState = (): GameState => {
   const startingSeeds = parseInt(sessionStorage.getItem('startingSeeds') || '4', 10);
@@ -117,7 +118,7 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
   const updateLeaderboard = async (name: string, score: number, duration: number, avatar: string) => {
     const newEntry = { playerName: name, score, duration, avatar };
     try {
-      await axios.post('http://localhost:5200/api/leaderboard', newEntry);
+      await axios.post( `${apiBaseUrl}/leaderboard`, newEntry);
     } catch (error) {
       console.error('Error updating leaderboard:', error);
     }
