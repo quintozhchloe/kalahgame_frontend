@@ -53,5 +53,9 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0"
-  }
+  },
+    "build": {
+      "command": "npm install --legacy-peer-deps && npm run build"
+    }
+  
 }
