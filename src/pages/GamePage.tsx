@@ -31,7 +31,7 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
       const validMoves = gameState.pits.slice(7, 13).map((seeds, index) => (seeds > 0 ? index + 7 : -1)).filter(index => index !== -1);
       if (validMoves.length > 0) {
         const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
-        setTimeout(() => handlePitClick(randomMove), 1000); // 延迟1秒后自动点击
+        setTimeout(() => handlePitClick(randomMove), 1000); //AI
       }
     }
   }, [gameState, isAIPlayer, gameOver]);
@@ -80,7 +80,7 @@ const GamePage: React.FC<{ password?: string }> = ({ password }) => {
         finalGameState.pits = finalGameState.pits.map((val, index) => (index < 6 || (index > 6 && index < 13) ? 0 : val));
         setGameOver(true);
         const endTime = Date.now();
-        const duration = Math.floor((endTime - startTime) / 1000); // 游戏时长（秒）
+        const duration = Math.floor((endTime - startTime) / 1000); 
         if (finalGameState.players[0].score > finalGameState.players[1].score) {
           setWinner(`${finalGameState.players[0].name} wins with ${finalGameState.players[0].score} points!`);
           updateLeaderboard(finalGameState.players[0].name, finalGameState.players[0].score, duration, finalGameState.players[0].avatar);

@@ -73,7 +73,7 @@ const PlayerSetup: React.FC = () => {
   };
 
   const generateRandomName = () => {
-    const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // 生成随机大写字母
+    const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)); 
     setPlayer2Name(randomLetter);
   };
 
@@ -174,7 +174,7 @@ const PlayerSetup: React.FC = () => {
             onSelect={handleAvatarSelect} 
             onSelectType={handlePlayerTypeSelect} 
             onCancel={() => setShowSelectionDialog(false)} 
-            showPlayerType={currentPlayer === 'player2'} // 控制是否显示玩家类型选择
+            showPlayerType={currentPlayer === 'player2'} 
           />
         </DialogContent>
       </Dialog>
