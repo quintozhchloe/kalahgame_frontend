@@ -15,7 +15,7 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
         className="pit" 
         onClick={() => onPitClick(start + index)}
         sx={{
-          backgroundColor: 'rgba(192, 192, 192, 1)', // 浅灰色底色
+          backgroundColor: 'rgba(192, 192, 192, 1)', 
           boxShadow: 'inset 0 0 10px #000000',
           borderRadius: '50%',
           padding: '10px',
@@ -23,15 +23,15 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
           justifyContent: 'center',
           alignItems: 'center',
           cursor: 'pointer',
-          width: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应宽度
-          height: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应高度
+          width: { xs: '60px', sm: '72px', md: '86.4px' },
+          height: { xs: '60px', sm: '72px', md: '86.4px' }, 
           margin: '10px'
         }}
       >
         <Typography 
           className="seeds"
           sx={{
-            fontSize: { xs: '16px', sm: '20px', md: '24px' }, // 自适应字号
+            fontSize: { xs: '16px', sm: '20px', md: '24px' },
             fontWeight: 'bold',
             color: 'black'
           }}
@@ -50,7 +50,7 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
           top: '10px',
           width: '100%',
           textAlign: 'center',
-          fontSize: { xs: '18px', sm: '22px', md: '24px' }, // 自适应字号
+          fontSize: { xs: '18px', sm: '22px', md: '24px' }, 
           fontWeight: 'bold',
           color: 'black'
         }}
@@ -62,22 +62,22 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
           <Box 
             className="store" 
             sx={{
-              backgroundColor: 'rgba(192, 192, 192, 1)', // 浅灰色底色
+              backgroundColor: 'rgba(192, 192, 192, 1)', 
               boxShadow: 'inset 0 0 10px #000000',
               borderRadius: '15px',
               padding: '10px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              width: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应宽度
-              height: { xs: '180px', sm: '200px', md: '216px' }, // 自适应高度
+              width: { xs: '60px', sm: '72px', md: '86.4px' },
+              height: { xs: '180px', sm: '200px', md: '216px' }, 
               margin: '10px'
             }}
           >
             <Typography 
               className="seeds"
               sx={{
-                fontSize: { xs: '18px', sm: '22px', md: '24px' }, // 自适应字号
+                fontSize: { xs: '18px', sm: '22px', md: '24px' },
                 fontWeight: 'bold',
                 color: 'black'
               }}
@@ -100,22 +100,22 @@ const Board: React.FC<BoardProps> = ({ gameState, onPitClick }) => {
           <Box 
             className="store" 
             sx={{
-              backgroundColor: 'rgba(192, 192, 192, 1)', // 浅灰色底色
+              backgroundColor: 'rgba(192, 192, 192, 1)', 
               boxShadow: 'inset 0 0 10px #000000',
               borderRadius: '15px',
               padding: '10px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              width: { xs: '60px', sm: '72px', md: '86.4px' }, // 自适应宽度
-              height: { xs: '180px', sm: '200px', md: '216px' }, // 自适应高度
+              width: { xs: '60px', sm: '72px', md: '86.4px' }, 
+              height: { xs: '180px', sm: '200px', md: '216px' }, 
               margin: '10px'
             }}
           >
             <Typography 
               className="seeds"
               sx={{
-                fontSize: { xs: '18px', sm: '22px', md: '24px' }, // 自适应字号
+                fontSize: { xs: '18px', sm: '22px', md: '24px' },
                 fontWeight: 'bold',
                 color: 'black'
               }}
