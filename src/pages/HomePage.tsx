@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Typography, Card, CardContent } from '@mui/material';
 import { Link } from 'react-router-dom';
-import '../styles/HomePage.css';  // 确保路径正确
+import '../styles/HomePage.css'; 
 
 const HomePage: React.FC = () => {
   return (
