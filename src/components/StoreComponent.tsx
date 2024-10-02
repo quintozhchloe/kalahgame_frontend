@@ -1,6 +1,5 @@
 import React from 'react';
-import storeImage from '../assets/store.png'; // 确保路径正确
-
+import storeImage from '../assets/store.png'; 
 const StoreComponent: React.FC = () => {
   return (
     <div className="store">
