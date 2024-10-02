@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Pit.css'; // 确保路径正确
+import '../styles/Pit.css';
 
 interface PitProps {
   seeds: number;
