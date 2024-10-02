@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Box } from '@mui/material';
-import '../styles/PlayerTypeSelection.css'; // 确保路径正确
+import '../styles/PlayerTypeSelection.css'; 
 
 interface PlayerTypeSelectionProps {
   onSelect: (type: 'bot' | 'local' | 'online') => void;
