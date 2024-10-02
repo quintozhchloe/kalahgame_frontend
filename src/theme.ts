@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#f5f5f5', // 设置你喜欢的背景色
+      default: '#f5f5f5', 
     },
     primary: {
       main: '#1976d2',
