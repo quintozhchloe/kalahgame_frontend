@@ -1,7 +1,7 @@
 export interface Player {
   name: string;
   score: number;
-  avatar: string; // 添加 avatar 属性
+  avatar: string; // avatar
 }
 
 export interface GameState {
