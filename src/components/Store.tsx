@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Store.css'; // 确保路径正确
+import '../styles/Store.css'; 
 
 interface StoreProps {
   seeds: number;
