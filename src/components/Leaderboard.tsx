@@ -19,7 +19,7 @@ const Leaderboard: React.FC = () => {
   const fetchLeaderboard = async () => {
     try {
       const response = await axios.get(`${API_URL}/leaderboard`);
-      console.log('Fetched leaderboard data:', response.data); // 调试日志
+      console.log('Fetched leaderboard data:', response.data); // debug log
       setLeaderboard(response.data);
     } catch (error) {
       console.error('Error fetching leaderboard:', error);
@@ -29,7 +29,7 @@ const Leaderboard: React.FC = () => {
   const addEntry = async (entry: PlayerScore) => {
     try {
       await axios.post(`${API_URL}/leaderboard`, entry);
-      fetchLeaderboard(); // 刷新列表
+      fetchLeaderboard(); //refresh the list
     } catch (error) {
       console.error('Error adding entry:', error);
     }
